@@ -15,9 +15,9 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/blogDB")
+  .connect("mongodb+srv://mauryaratnesh32_db_user:mSsD5OzVYsWS44ya@blogifycluster.tgbzlup.mongodb.net/blogDB")
 
-  .then(() => {
+  .then(() => { 
     console.log("mongodb connected");
   })
 
