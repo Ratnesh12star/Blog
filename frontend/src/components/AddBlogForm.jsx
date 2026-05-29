@@ -34,7 +34,7 @@ const AddBlogForm = ({ loadBlogs }) => {
         );
 
       await axios.post(
-        "http://localhost:5000/api/blog/create",
+        "https://blog-1-5frq.onrender.com/blog/create",
         data,
         {
           headers: {

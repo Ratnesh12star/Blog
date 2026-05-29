@@ -1,139 +1,66 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import {
-  FaEye,
-  FaEdit,
-  FaTrash,
-  FaBoxOpen,
-  FaPlus,
-} from "react-icons/fa";
+import { FaEye, FaEdit, FaTrash, FaBoxOpen, FaPlus } from "react-icons/fa";
 
 import { motion } from "framer-motion";
 
 import { useNavigate } from "react-router-dom";
 
 const ProductPanel = () => {
+  const navigate = useNavigate();
 
-  const navigate =
-    useNavigate();
+  const [products, setProducts] = useState([]);
 
-  const [products,
-    setProducts] =
-    useState([]);
-
-  const [loading,
-    setLoading] =
-    useState(true);
-
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     loadProducts();
-
   }, []);
-
-
-
 
   // ================= LOAD PRODUCTS =================
 
-  const loadProducts =
-    async () => {
+  const loadProducts = async () => {
+    try {
+      const res = await axios.get("https://blog-1-5frq.onrender.com/product");
 
-      try {
-
-        const res =
-          await axios.get(
-            "http://localhost:5000/api/product"
-          );
-
-        if (
-          Array.isArray(res.data)
-        ) {
-
-          setProducts(
-            res.data
-          );
-
-        }
-
-        else {
-
-          setProducts(
-            res.data.data || []
-          );
-
-        }
-
+      if (Array.isArray(res.data)) {
+        setProducts(res.data);
+      } else {
+        setProducts(res.data.data || []);
       }
+    } catch (error) {
+      console.log(error);
 
-      catch (error) {
-
-        console.log(
-          error
-        );
-
-        setProducts([]);
-
-      }
-
-      finally {
-
-        setLoading(false);
-
-      }
-
-    };
-
-
-
+      setProducts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // ================= DELETE PRODUCT =================
 
-  const deleteProduct =
-    async (id) => {
+  const deleteProduct = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
 
-      try {
+      await axios.delete(
+        `https://blog-1-5frq.onrender.com/product/delete/${id}`,
 
-        const token =
-          localStorage.getItem(
-            "token"
-          );
+        {
+          headers: {
+            Authorization: token,
+          },
+        },
+      );
 
-        await axios.delete(
-
-          `http://localhost:5000/api/product/delete/${id}`,
-
-          {
-            headers: {
-              Authorization:
-                token,
-            },
-          }
-
-        );
-
-        loadProducts();
-
-      }
-
-      catch (error) {
-
-        console.log(
-          error
-        );
-
-      }
-
-    };
-
-
-
+      loadProducts();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-
     <section
       className="
       min-h-screen
@@ -144,7 +71,6 @@ const ProductPanel = () => {
       p-8
       "
     >
-
       {/* ================= TOP ================= */}
 
       <div
@@ -157,9 +83,7 @@ const ProductPanel = () => {
         gap-6
         "
       >
-
         <div>
-
           <h1
             className="
             text-5xl
@@ -167,9 +91,7 @@ const ProductPanel = () => {
             text-white
             "
           >
-
             Products
-
           </h1>
 
           <p
@@ -179,24 +101,14 @@ const ProductPanel = () => {
             text-lg
             "
           >
-
             Manage all products data
-
           </p>
-
         </div>
-
-
 
         {/* ADD BUTTON */}
 
         <button
-          onClick={() =>
-            navigate(
-              "/addproduct"
-            )
-          }
-
+          onClick={() => navigate("/addproduct")}
           className="
           flex
           items-center
@@ -214,17 +126,10 @@ const ProductPanel = () => {
           shadow-lg
           "
         >
-
           <FaPlus />
-
           Add Product
-
         </button>
-
       </div>
-
-
-
 
       {/* ================= STATS ================= */}
 
@@ -236,7 +141,6 @@ const ProductPanel = () => {
         mt-12
         "
       >
-
         <div
           className="
           bg-white/10
@@ -247,7 +151,6 @@ const ProductPanel = () => {
           p-8
           "
         >
-
           <h1
             className="
             text-5xl
@@ -255,9 +158,7 @@ const ProductPanel = () => {
             text-white
             "
           >
-
             {products.length}
-
           </h1>
 
           <p
@@ -266,14 +167,9 @@ const ProductPanel = () => {
             mt-3
             "
           >
-
             Total Products
-
           </p>
-
         </div>
-
-
 
         <div
           className="
@@ -285,7 +181,6 @@ const ProductPanel = () => {
           p-8
           "
         >
-
           <h1
             className="
             text-5xl
@@ -293,9 +188,7 @@ const ProductPanel = () => {
             text-white
             "
           >
-
             120+
-
           </h1>
 
           <p
@@ -304,14 +197,9 @@ const ProductPanel = () => {
             mt-3
             "
           >
-
             Available Stock
-
           </p>
-
         </div>
-
-
 
         <div
           className="
@@ -323,7 +211,6 @@ const ProductPanel = () => {
           p-8
           "
         >
-
           <h1
             className="
             text-5xl
@@ -331,9 +218,7 @@ const ProductPanel = () => {
             text-white
             "
           >
-
             15+
-
           </h1>
 
           <p
@@ -342,59 +227,36 @@ const ProductPanel = () => {
             mt-3
             "
           >
-
             Categories
-
           </p>
-
         </div>
-
       </div>
-
-
-
 
       {/* ================= LOADING ================= */}
 
-      {
-        loading ?
-
-          (
-
-            <div
-              className="
+      {loading ? (
+        <div
+          className="
               flex
               justify-center
               items-center
               h-[300px]
               "
-            >
-
-              <h1
-                className="
+        >
+          <h1
+            className="
                 text-white
                 text-3xl
                 font-bold
                 animate-pulse
                 "
-              >
-
-                Loading Products...
-
-              </h1>
-
-            </div>
-
-          )
-
-          :
-
-          products.length === 0 ?
-
-            (
-
-              <div
-                className="
+          >
+            Loading Products...
+          </h1>
+        </div>
+      ) : products.length === 0 ? (
+        <div
+          className="
                 mt-16
                 bg-white/10
                 backdrop-blur-2xl
@@ -404,10 +266,9 @@ const ProductPanel = () => {
                 p-20
                 text-center
                 "
-              >
-
-                <div
-                  className="
+        >
+          <div
+            className="
                   h-28
                   w-28
                   rounded-full
@@ -417,88 +278,64 @@ const ProductPanel = () => {
                   justify-center
                   mx-auto
                   "
-                >
-
-                  <FaBoxOpen
-                    className="
+          >
+            <FaBoxOpen
+              className="
                     text-6xl
                     text-pink-400
                     "
-                  />
+            />
+          </div>
 
-                </div>
-
-                <h1
-                  className="
+          <h1
+            className="
                   text-white
                   text-4xl
                   font-black
                   mt-8
                   "
-                >
+          >
+            No Products Found
+          </h1>
 
-                  No Products Found
-
-                </h1>
-
-                <p
-                  className="
+          <p
+            className="
                   text-gray-400
                   mt-4
                   text-lg
                   "
-                >
-
-                  Add product data from admin panel
-
-                </p>
-
-              </div>
-
-            )
-
-            :
-
-            (
-
-              <div
-                className="
+          >
+            Add product data from admin panel
+          </p>
+        </div>
+      ) : (
+        <div
+          className="
                 grid
                 md:grid-cols-2
                 xl:grid-cols-3
                 gap-8
                 mt-14
                 "
-              >
-
-                {
-                  products.map(
-                    (product) => (
-
-                      <motion.div
-                        key={
-                          product._id
-                        }
-
-                        initial={{
-                          opacity: 0,
-                          y: 50,
-                        }}
-
-                        whileInView={{
-                          opacity: 1,
-                          y: 0,
-                        }}
-
-                        transition={{
-                          duration: 0.5,
-                        }}
-
-                        whileHover={{
-                          y: -8,
-                        }}
-
-                        className="
+        >
+          {products.map((product) => (
+            <motion.div
+              key={product._id}
+              initial={{
+                opacity: 0,
+                y: 50,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.5,
+              }}
+              whileHover={{
+                y: -8,
+              }}
+              className="
                         bg-white/10
                         backdrop-blur-2xl
                         border
@@ -507,226 +344,157 @@ const ProductPanel = () => {
                         overflow-hidden
                         shadow-2xl
                         "
-                      >
+            >
+              {/* IMAGE */}
 
-                        {/* IMAGE */}
-
-                        <div className="relative">
-
-                          <img
-                            src={
-                              product.image
-                            }
-
-                            alt=""
-
-                            className="
+              <div className="relative">
+                <img
+                  src={product.image}
+                  alt=""
+                  className="
                             h-80
                             w-full
                             object-cover
                             "
-                          />
+                />
 
-                          <div
-                            className="
+                <div
+                  className="
                             absolute
                             inset-0
                             bg-gradient-to-t
                             from-black/80
                             to-transparent
                             "
-                          />
+                />
 
-                          <div
-                            className="
+                <div
+                  className="
                             absolute
                             bottom-5
                             left-5
                             "
-                          >
-
-                            <p
-                              className="
+                >
+                  <p
+                    className="
                               text-pink-300
                               text-sm
                               uppercase
                               tracking-[3px]
                               "
-                            >
+                  >
+                    {product.category}
+                  </p>
 
-                              {
-                                product.category
-                              }
-
-                            </p>
-
-                            <h1
-                              className="
+                  <h1
+                    className="
                               text-white
                               text-3xl
                               font-black
                               mt-2
                               "
-                            >
+                  >
+                    {product.title}
+                  </h1>
+                </div>
+              </div>
 
-                              {
-                                product.title
-                              }
+              {/* CONTENT */}
 
-                            </h1>
-
-                          </div>
-
-                        </div>
-
-
-
-
-                        {/* CONTENT */}
-
-                        <div className="p-6">
-
-                          <div className="space-y-4">
-
-                            <div
-                              className="
+              <div className="p-6">
+                <div className="space-y-4">
+                  <div
+                    className="
                               bg-white/5
                               border
                               border-white/10
                               rounded-2xl
                               p-4
                               "
-                            >
+                  >
+                    <p className="text-gray-400 text-sm">Description</p>
 
-                              <p className="text-gray-400 text-sm">
-
-                                Description
-
-                              </p>
-
-                              <h1
-                                className="
+                    <h1
+                      className="
                                 text-white
                                 mt-2
                                 leading-7
                                 "
-                              >
+                    >
+                      {product.description}
+                    </h1>
+                  </div>
 
-                                {
-                                  product.description
-                                }
-
-                              </h1>
-
-                            </div>
-
-
-
-                            <div
-                              className="
+                  <div
+                    className="
                               grid
                               grid-cols-2
                               gap-4
                               "
-                            >
-
-                              <div
-                                className="
+                  >
+                    <div
+                      className="
                                 bg-white/5
                                 border
                                 border-white/10
                                 rounded-2xl
                                 p-4
                                 "
-                              >
+                    >
+                      <p className="text-gray-400 text-sm">Price</p>
 
-                                <p className="text-gray-400 text-sm">
-
-                                  Price
-
-                                </p>
-
-                                <h1
-                                  className="
+                      <h1
+                        className="
                                   text-green-400
                                   text-xl
                                   font-bold
                                   mt-2
                                   "
-                                >
+                      >
+                        ₹{product.price}
+                      </h1>
+                    </div>
 
-                                  ₹
-                                  {
-                                    product.price
-                                  }
-
-                                </h1>
-
-                              </div>
-
-
-
-                              <div
-                                className="
+                    <div
+                      className="
                                 bg-white/5
                                 border
                                 border-white/10
                                 rounded-2xl
                                 p-4
                                 "
-                              >
+                    >
+                      <p className="text-gray-400 text-sm">Stock</p>
 
-                                <p className="text-gray-400 text-sm">
-
-                                  Stock
-
-                                </p>
-
-                                <h1
-                                  className="
+                      <h1
+                        className="
                                   text-cyan-400
                                   text-xl
                                   font-bold
                                   mt-2
                                   "
-                                >
+                      >
+                        {product.stock}
+                      </h1>
+                    </div>
+                  </div>
+                </div>
 
-                                  {
-                                    product.stock
-                                  }
+                {/* BUTTONS */}
 
-                                </h1>
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-
-
-
-                          {/* BUTTONS */}
-
-                          <div
-                            className="
+                <div
+                  className="
                             grid
                             grid-cols-3
                             gap-4
                             mt-8
                             "
-                          >
+                >
+                  {/* VIEW */}
 
-                            {/* VIEW */}
-
-                            <button
-                              onClick={() =>
-                                navigate(
-                                  `/viewproduct/${product._id}`
-                                )
-                              }
-
-                              className="
+                  <button
+                    onClick={() => navigate(`/viewproduct/${product._id}`)}
+                    className="
                               bg-cyan-600
                               hover:bg-cyan-700
                               duration-300
@@ -739,26 +507,16 @@ const ProductPanel = () => {
                               gap-2
                               font-semibold
                               "
-                            >
+                  >
+                    <FaEye />
+                    View
+                  </button>
 
-                              <FaEye />
+                  {/* UPDATE */}
 
-                              View
-
-                            </button>
-
-
-
-                            {/* UPDATE */}
-
-                            <button
-                              onClick={() =>
-                                navigate(
-                                  `/updateproduct/${product._id}`
-                                )
-                              }
-
-                              className="
+                  <button
+                    onClick={() => navigate(`/updateproduct/${product._id}`)}
+                    className="
                               bg-yellow-500
                               hover:bg-yellow-600
                               duration-300
@@ -771,26 +529,16 @@ const ProductPanel = () => {
                               gap-2
                               font-semibold
                               "
-                            >
+                  >
+                    <FaEdit />
+                    Update
+                  </button>
 
-                              <FaEdit />
+                  {/* DELETE */}
 
-                              Update
-
-                            </button>
-
-
-
-                            {/* DELETE */}
-
-                            <button
-                              onClick={() =>
-                                deleteProduct(
-                                  product._id
-                                )
-                              }
-
-                              className="
+                  <button
+                    onClick={() => deleteProduct(product._id)}
+                    className="
                               bg-red-600
                               hover:bg-red-700
                               duration-300
@@ -803,33 +551,18 @@ const ProductPanel = () => {
                               gap-2
                               font-semibold
                               "
-                            >
-
-                              <FaTrash />
-
-                              Delete
-
-                            </button>
-
-                          </div>
-
-                        </div>
-
-                      </motion.div>
-
-                    )
-                  )
-                }
-
+                  >
+                    <FaTrash />
+                    Delete
+                  </button>
+                </div>
               </div>
-
-            )
-
-      }
-
+            </motion.div>
+          ))}
+        </div>
+      )}
     </section>
   );
-
 };
 
 export default ProductPanel;

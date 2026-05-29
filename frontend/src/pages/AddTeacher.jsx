@@ -47,7 +47,7 @@ const AddTeacher = () => {
 
             await axios.post(
 
-                "http://localhost:5000/api/teacher/create",
+                "https://blog-1-5frq.onrender.com/teacher/create",
 
                 data,
 

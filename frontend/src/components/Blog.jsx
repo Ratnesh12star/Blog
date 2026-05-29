@@ -12,7 +12,7 @@ const Blogs = () => {
   const fetchBlogs = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/blog"
+        "https://blog-1-5frq.onrender.com/blog"
       );
 
       setBlogs(res.data || []);

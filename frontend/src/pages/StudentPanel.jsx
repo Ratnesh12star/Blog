@@ -33,7 +33,7 @@ const StudentPanel = () => {
     try {
 
       const response = await axios.get(
-        "http://localhost:5000/api/student"
+        "https://blog-1-5frq.onrender.com/student"
       );
 
       setStudents(response.data);
@@ -61,7 +61,7 @@ const StudentPanel = () => {
 
       await axios.delete(
 
-        `http://localhost:5000/api/student/delete/${studentId}`,
+        `https://blog-1-5frq.onrender.com/student/delete/${studentId}`,
 
         {
           headers: {
