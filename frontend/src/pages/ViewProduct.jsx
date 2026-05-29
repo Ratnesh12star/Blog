@@ -11,7 +11,7 @@ const ViewProduct = () => {
   const loadProducts = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/product"
+        "https://blog-1-5frq.onrender.com/api/product"
       );
 
       setProducts(res.data.data || []);

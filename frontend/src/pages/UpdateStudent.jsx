@@ -49,7 +49,7 @@ const UpdateStudent = () => {
         const res =
           await axios.get(
 
-            `http://localhost:5000/api/student/${id}`
+            `https://blog-1-5frq.onrender.com/api/student/${id}`
 
           );
 
@@ -100,7 +100,7 @@ const UpdateStudent = () => {
 
         await axios.put(
 
-          `http://localhost:5000/api/student/update/${id}`,
+          `https://blog-1-5frq.onrender.com/api/student/update/${id}`,
 
           formData
 

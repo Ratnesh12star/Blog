@@ -55,7 +55,7 @@ const UpdateProduct = () => {
 
       await axios.put(
 
-        `http://localhost:5000/api/product/update/${id}`,
+        `https://blog-1-5frq.onrender.com/api/product/update/${id}`,
 
         formData
 

@@ -27,7 +27,7 @@ const UpdateCategory = () => {
 
     const res =
       await axios.get(
-        `http://localhost:5000/api/category/${id}`
+        `https://blog-1-5frq.onrender.com/api/category/${id}`
       );
 
     setFormData(res.data);
@@ -54,7 +54,7 @@ const UpdateCategory = () => {
 
       await axios.put(
 
-        `http://localhost:5000/api/category/update/${id}`,
+        `https://blog-1-5frq.onrender.com/api/category/update/${id}`,
 
         formData
 

@@ -22,7 +22,7 @@ const CategoryPanel = () => {
   const loadCategories = async () => {
     try {
       const res = await axios.get(
-        "https://blog-1-5frq.onrender.com/category"
+        "https://blog-1-5frq.onrender.com/api/category"
       );
 
       setCategories(res.data.data || []);
@@ -38,7 +38,7 @@ const CategoryPanel = () => {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `https://blog-1-5frq.onrender.com/category/delete/${id}`,
+        `https://blog-1-5frq.onrender.com/api/category/delete/${id}`,
         {
           headers: {
             Authorization: token,

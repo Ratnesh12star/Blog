@@ -3,63 +3,42 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
+  const login = async (e) => {
+    e.preventDefault();
 
+    setLoading(true);
 
-    const login = async (e) => {
+    try {
+      const res = await axios.post(
+        "https://blog-1-5frq.onrender.com/api/admin/login",
 
-        e.preventDefault();
+        {
+          email,
+          password,
+        },
+      );
 
-        setLoading(true);
+      localStorage.setItem("token", res.data.token);
 
-        try {
+      navigate("/dashboard");
+    } catch (error) {
+      console.log(error);
 
-            const res = await axios.post(
-
-                "https://blog-1-5frq.onrender.com/admin/login",
-
-                {
-                    email,
-                    password
-                }
-
-            );
-
-            localStorage.setItem(
-                "token",
-                res.data.token
-            );
-
-            navigate("/dashboard");
-
-        }
-
-        catch (error) {
-
-            console.log(error);
-
-            alert("Invalid Credentials");
-
-        }
-
-        finally {
-
-            setLoading(false)
-
-        }
-
+      alert("Invalid Credentials");
+    } finally {
+      setLoading(false);
     }
+  };
 
-
-    return (
-
-        <div
-            className="
+  return (
+    <div
+      className="
 min-h-screen
 bg-gradient-to-br
 from-slate-950
@@ -70,10 +49,9 @@ items-center
 justify-center
 px-6
 "
-        >
-
-            <div
-                className="
+    >
+      <div
+        className="
 max-w-6xl
 w-full
 grid
@@ -86,13 +64,11 @@ rounded-[35px]
 shadow-2xl
 overflow-hidden
 "
-            >
+      >
+        {/* Left Side */}
 
-
-                {/* Left Side */}
-
-                <div
-                    className="
+        <div
+          className="
 hidden
 md:flex
 items-center
@@ -102,111 +78,82 @@ bg-gradient-to-br
 from-blue-600
 to-purple-700
 "
-                >
-
-                    <div>
-
-                        <img
-
-                            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900"
-
-                            alt="admin"
-
-                            className="
+        >
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=900"
+              alt="admin"
+              className="
 rounded-3xl
 shadow-2xl
 w-full
 animate-pulse
 "
-                        />
+            />
 
-                        <h1
-                            className="
+            <h1
+              className="
 text-white
 text-4xl
 font-bold
 mt-8
-">
+"
+            >
+              Admin Dashboard
+            </h1>
 
-                            Admin Dashboard
-
-                        </h1>
-
-                        <p
-                            className="
+            <p
+              className="
 text-white/80
 mt-4
 leading-8
-">
+"
+            >
+              Manage blogs, update content, create articles and control your
+              platform.
+            </p>
+          </div>
+        </div>
 
-                            Manage blogs, update content,
-                            create articles and control
-                            your platform.
+        {/* Right Side */}
 
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-
-                {/* Right Side */}
-
-                <div className="p-10 md:p-16">
-
-                    <p className="
+        <div className="p-10 md:p-16">
+          <p
+            className="
 text-blue-400
 tracking-widest
-">
+"
+          >
+            ADMIN PANEL
+          </p>
 
-                        ADMIN PANEL
-
-                    </p>
-
-                    <h1
-                        className="
+          <h1
+            className="
 text-4xl
 font-bold
 text-white
 mt-3
-">
+"
+          >
+            Welcome Back
+          </h1>
 
-                        Welcome Back
-
-                    </h1>
-
-                    <p className="
+          <p
+            className="
 text-gray-400
 mt-3
-">
+"
+          >
+            Login to access your dashboard
+          </p>
 
-                        Login to access your dashboard
-
-                    </p>
-
-
-
-                    <form
-                        onSubmit={login}
-                        className="mt-10"
-                    >
-
-                        <input
-
-                            type="email"
-
-                            placeholder="Enter Email"
-
-                            value={email}
-
-                            onChange={(e) =>
-                                setEmail(
-                                    e.target.value
-                                )
-                            }
-
-                            className="
+          <form onSubmit={login} className="mt-10">
+            <input
+              type="email"
+              placeholder="Enter Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="
 w-full
 p-4
 mb-5
@@ -217,25 +164,14 @@ border-white/20
 text-white
 outline-none
 "
-                        />
+            />
 
-
-
-                        <input
-
-                            type="password"
-
-                            placeholder="Enter Password"
-
-                            value={password}
-
-                            onChange={(e) =>
-                                setPassword(
-                                    e.target.value
-                                )
-                            }
-
-                            className="
+            <input
+              type="password"
+              placeholder="Enter Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="
 w-full
 p-4
 mb-5
@@ -246,13 +182,10 @@ border-white/20
 text-white
 outline-none
 "
-                        />
+            />
 
-
-
-                        <button
-
-                            className="
+            <button
+              className="
 w-full
 p-4
 rounded-xl
@@ -262,29 +195,14 @@ text-white
 font-semibold
 duration-300
 "
-
-                        >
-
-                            {
-                                loading
-                                    ?
-                                    "Logging..."
-                                    :
-                                    "Login"
-                            }
-
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
+            >
+              {loading ? "Logging..." : "Login"}
+            </button>
+          </form>
         </div>
-
-    )
-
-}
+      </div>
+    </div>
+  );
+};
 
 export default AdminLogin;

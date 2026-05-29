@@ -7,12 +7,15 @@ import studentRoutes from "./routes/studentRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import teacherRoutes from "./routes/teacherRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
+import morgan from "morgan";
 
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
+
+app.use(morgan());
 
 mongoose
   .connect("mongodb+srv://mauryaratnesh32_db_user:mSsD5OzVYsWS44ya@blogifycluster.tgbzlup.mongodb.net/blogDB")

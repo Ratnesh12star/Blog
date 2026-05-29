@@ -51,7 +51,7 @@ const AddStudent = () => {
 
       await axios.post(
 
-      "https://blog-1-5frq.onrender.com/student/create",
+      "https://blog-1-5frq.onrender.com/api/student/create",
 
       data,
 

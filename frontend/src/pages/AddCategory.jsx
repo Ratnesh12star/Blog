@@ -24,7 +24,7 @@ const AddCategory = () => {
       const token = localStorage.getItem("token");
 
       await axios.post(
-        "https://blog-1-5frq.onrender.com/category/create",
+        "https://blog-1-5frq.onrender.com/api/category/create",
         data,
         {
           headers: {

@@ -33,7 +33,7 @@ const StudentPanel = () => {
     try {
 
       const response = await axios.get(
-        "https://blog-1-5frq.onrender.com/student"
+        "https://blog-1-5frq.onrender.com/api/student"
       );
 
       setStudents(response.data);

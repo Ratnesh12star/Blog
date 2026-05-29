@@ -18,7 +18,7 @@ const ViewTeacher = () => {
 
       const res =
         await axios.get(
-          "http://localhost:5000/api/teacher"
+          "https://blog-1-5frq.onrender.com/api/teacher"
         );
 
       setTeachers(res.data || []);

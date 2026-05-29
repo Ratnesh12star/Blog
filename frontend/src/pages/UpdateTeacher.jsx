@@ -30,7 +30,7 @@ const UpdateTeacher = () => {
 
     const res =
       await axios.get(
-        `http://localhost:5000/api/teacher/${id}`
+        `https://blog-1-5frq.onrender.com/api/teacher/${id}`
       );
 
     setFormData(res.data);
@@ -57,7 +57,7 @@ const UpdateTeacher = () => {
 
       await axios.put(
 
-        `http://localhost:5000/api/teacher/update/${id}`,
+        `https://blog-1-5frq.onrender.com/api/teacher/update/${id}`,
 
         formData
 

@@ -51,7 +51,7 @@ const Dashboard = () => {
 
         const res =
           await axios.get(
-            "http://localhost:5000/api/blog"
+            "https://blog-1-5frq.onrender.com/api/blog"
           );
 
         setBlogs(
@@ -84,7 +84,7 @@ const Dashboard = () => {
 
         await axios.delete(
 
-          `http://localhost:5000/api/blog/delete/${id}`,
+          `https://blog-1-5frq.onrender.com/api/blog/delete/${id}`,
 
           {
             headers: {

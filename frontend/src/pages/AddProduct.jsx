@@ -47,7 +47,7 @@ const AddProduct = () => {
 
             await axios.post(
 
-                "https://blog-1-5frq.onrender.com/product/create",
+                "https://blog-1-5frq.onrender.com/api/product/create",
 
                 data,
 

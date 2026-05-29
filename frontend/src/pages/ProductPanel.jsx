@@ -22,7 +22,7 @@ const ProductPanel = () => {
 
   const loadProducts = async () => {
     try {
-      const res = await axios.get("https://blog-1-5frq.onrender.com/product");
+      const res = await axios.get("https://blog-1-5frq.onrender.com/api/product");
 
       if (Array.isArray(res.data)) {
         setProducts(res.data);
@@ -45,7 +45,7 @@ const ProductPanel = () => {
       const token = localStorage.getItem("token");
 
       await axios.delete(
-        `https://blog-1-5frq.onrender.com/product/delete/${id}`,
+        `https://blog-1-5frq.onrender.com/api/product/delete/${id}`,
 
         {
           headers: {

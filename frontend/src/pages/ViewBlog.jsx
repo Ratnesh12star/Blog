@@ -22,7 +22,7 @@ const ViewBlog = () => {
 
         const res =
           await axios.get(
-            `http://localhost:5000/api/blog`
+            `https://blog-1-5frq.onrender.com/api/blog`
           );
 
         const singleBlog =

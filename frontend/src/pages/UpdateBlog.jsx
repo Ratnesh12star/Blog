@@ -24,7 +24,7 @@ const UpdateBlog = () => {
     const loadSingleBlog = async () => {
         try {
             const res = await axios.get(
-                "http://localhost:5000/api/blog"
+                "https://blog-1-5frq.onrender.com/api/blog"
             );
 
             const blog = res.data.find(
@@ -57,7 +57,7 @@ const UpdateBlog = () => {
                 );
 
             await axios.put(
-                `http://localhost:5000/api/blog/update/${id}`,
+                `https://blog-1-5frq.onrender.com/api/blog/update/${id}`,
                 data,
                 {
                     headers: {
